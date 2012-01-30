@@ -1,3 +1,7 @@
 *.o
 dlo_defs.h
 libdlo.h
+Makefile
+moc_*.cpp
+qtdloprez
+ui_*.h
