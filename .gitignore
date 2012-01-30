@@ -1,0 +1,3 @@
+*.o
+dlo_defs.h
+libdlo.h
