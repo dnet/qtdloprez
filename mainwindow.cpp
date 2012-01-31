@@ -7,7 +7,8 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow) {
+    ui(new Ui::MainWindow),
+    resolution(QString("%1x%2").arg(dla.width()).arg(dla.height())) {
     ui->setupUi(this);
     const QDesktopWidget dw;
     const QRect screen = dw.screenGeometry();
@@ -24,8 +25,6 @@ void MainWindow::on_actionLoad_PDF_triggered() {
 	QString fn = QFileDialog::getOpenFileName(this, "Open presentation", "",
 			"PDF files (*.pdf)");
 	if (!QFile::exists(fn)) return;
-
-	QString resolution = QString("%1x%2").arg(dla.width()).arg(dla.height());
 
 	QCryptographicHash hash(QCryptographicHash::Sha1);
 	hash.addData(fn.toUtf8());

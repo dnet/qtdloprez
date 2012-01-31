@@ -28,6 +28,7 @@ private:
 protected:
 	DisplayLinkAdapter dla;
 	QDir cacheDir;
+	const QString resolution;
 	int curImage;
 	void loadImage(const int image);
 };
