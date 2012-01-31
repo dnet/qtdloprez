@@ -10,7 +10,7 @@ class DisplayLinkAdapter {
 public:
 	DisplayLinkAdapter();
 	~DisplayLinkAdapter();
-	bool displayImage(const QImage &image);
+	void displayImage(const QImage &image);
 	uint16_t width() const;
 	uint16_t height() const;
 
