@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow),
     resolution(QString("%1x%2").arg(dla.width()).arg(dla.height())) {
     ui->setupUi(this);
+    ui->statusbar->showMessage(QString("DisplayLink native resolution is ") + resolution);
     const QDesktopWidget dw;
     const QRect screen = dw.screenGeometry();
     const QRect size = geometry();
