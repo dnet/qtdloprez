@@ -95,11 +95,11 @@ void MainWindow::on_actionLoad_PDF_triggered() {
 }
 
 void MainWindow::loadImage(const int image) {
-	QString imageName = cacheDir.absoluteFilePath(
+	const QString imageName = cacheDir.absoluteFilePath(
 			QString("converted-%1.png").arg(image));
 	if (!QFile::exists(imageName)) return;
 
-	QImage img(imageName);
+	const QImage img(imageName);
 	dla.displayImage(img);
 	ui->preview->setText("");
 	ui->preview->setPixmap(QPixmap::fromImage(img).scaled(ui->preview->size(),
