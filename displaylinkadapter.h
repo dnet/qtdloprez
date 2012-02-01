@@ -11,9 +11,12 @@ public:
 	DisplayLinkAdapter();
 	~DisplayLinkAdapter();
 	void displayImage(const QImage &image);
+	void setMode(uint16_t width, uint16_t height, uint8_t bpp, uint8_t refresh);
 	void setPreferredMode();
 	uint16_t width() const;
 	uint16_t height() const;
+	uint8_t bpp() const;
+	uint8_t refresh() const;
 
 protected:
 	dlo_dev_t uid;

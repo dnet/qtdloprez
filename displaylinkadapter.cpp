@@ -24,6 +24,26 @@ uint16_t DisplayLinkAdapter::width() const {
 	return mode_info->view.width;
 }
 
+uint8_t DisplayLinkAdapter::bpp() const {
+	return mode_info->view.bpp;
+}
+
+uint8_t DisplayLinkAdapter::refresh() const {
+	return mode_info->refresh;
+}
+
+void DisplayLinkAdapter::setMode(uint16_t width, uint16_t height, uint8_t bpp, uint8_t refresh) {
+	dlo_mode_t mode;
+
+	mode.view.width = width;
+	mode.view.height = height;
+	mode.view.bpp = bpp;
+	mode.view.base = 0;
+	mode.refresh = refresh;
+
+	setModePointer(&mode);
+}
+
 void DisplayLinkAdapter::setPreferredMode() {
 	/* Select the monitor's preferred mode, based on EDID */
 	setModePointer(NULL);
