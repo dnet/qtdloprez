@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "resolutiondialog.h"
 #include <QDesktopWidget>
 #include <QFileDialog>
 #include <QProcess>
@@ -26,6 +27,14 @@ const QString MainWindow::resolution() const {
 }
 
 void MainWindow::on_actionLoad_PDF_triggered() {
+	ResolutionDialog rd(this);
+	rd.setParameters(dla.width(), dla.height(), dla.bpp(), dla.refresh());
+	if (!rd.exec()) return;
+
+	if (!rd.useCurrent()) {
+		dla.setMode(rd.width(), rd.height(), rd.bpp(), rd.refresh());
+	}
+
 	QString fn = QFileDialog::getOpenFileName(this, "Open presentation", "",
 			"PDF files (*.pdf)");
 	if (!QFile::exists(fn)) return;
