@@ -13,12 +13,7 @@ DisplayLinkAdapter::DisplayLinkAdapter() {
 	uid = dlo_claim_first_device(cnf_flags, 0);
 	if (!uid) throw NoDisplayLinkFound();
 
-	/* Select the monitor's preferred mode, based on EDID */
-	OO_ERR(dlo_set_mode(uid, NULL));
-
-	/* Read current mode information */
-	mode_info = dlo_get_mode(uid);
-	OO_NERR(mode_info);
+	setPreferredMode();
 }
 
 uint16_t DisplayLinkAdapter::height() const {
@@ -27,6 +22,19 @@ uint16_t DisplayLinkAdapter::height() const {
 
 uint16_t DisplayLinkAdapter::width() const {
 	return mode_info->view.width;
+}
+
+void DisplayLinkAdapter::setPreferredMode() {
+	/* Select the monitor's preferred mode, based on EDID */
+	setModePointer(NULL);
+}
+
+void DisplayLinkAdapter::setModePointer(const dlo_mode_t *mode) {
+	OO_ERR(dlo_set_mode(uid, mode));
+
+	/* Read current mode information */
+	mode_info = dlo_get_mode(uid);
+	OO_NERR(mode_info);
 }
 
 DisplayLinkAdapter::~DisplayLinkAdapter() {
