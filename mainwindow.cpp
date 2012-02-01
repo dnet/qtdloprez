@@ -7,10 +7,9 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow),
-    resolution(QString("%1x%2").arg(dla.width()).arg(dla.height())) {
+    ui(new Ui::MainWindow) {
     ui->setupUi(this);
-    ui->statusbar->showMessage(QString("DisplayLink native resolution is ") + resolution);
+    ui->statusbar->showMessage(QString("DisplayLink native resolution is ") + resolution());
     const QDesktopWidget dw;
     const QRect screen = dw.screenGeometry();
     const QRect size = geometry();
@@ -22,6 +21,10 @@ MainWindow::~MainWindow() {
     delete ui;
 }
 
+const QString MainWindow::resolution() const {
+    return QString("%1x%2").arg(dla.width()).arg(dla.height());
+}
+
 void MainWindow::on_actionLoad_PDF_triggered() {
 	QString fn = QFileDialog::getOpenFileName(this, "Open presentation", "",
 			"PDF files (*.pdf)");
@@ -29,7 +32,7 @@ void MainWindow::on_actionLoad_PDF_triggered() {
 
 	QCryptographicHash hash(QCryptographicHash::Sha1);
 	hash.addData(fn.toUtf8());
-	hash.addData(resolution.toAscii());
+	hash.addData(resolution().toAscii());
 
 	cacheDir = QDir(QDir::temp().absoluteFilePath("qtdloprez") +
 			QDir::separator() + hash.result().toHex());
@@ -38,13 +41,13 @@ void MainWindow::on_actionLoad_PDF_triggered() {
 		QProcess convert;
 		QStringList params;
 
-		params << "-density" << "200" << "-sample" << resolution;
+		params << "-density" << "200" << "-sample" << resolution();
 		params << fn << cacheDir.absoluteFilePath("converted.png");
 
 		cacheDir.mkpath(".");
 		convert.start("convert", params);
 		ui->statusbar->showMessage(
-				QString("Converting slides to %1...").arg(resolution));
+				QString("Converting slides to %1...").arg(resolution()));
 		while (!convert.waitForFinished(100)) QCoreApplication::processEvents();
 		ui->statusbar->clearMessage();
 	}

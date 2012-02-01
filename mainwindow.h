@@ -15,6 +15,7 @@ class MainWindow : public QMainWindow
     
 public:
     explicit MainWindow(QWidget *parent = 0);
+	const QString resolution() const;
     ~MainWindow();
 
 private slots:
@@ -28,7 +29,6 @@ private:
 protected:
 	DisplayLinkAdapter dla;
 	QDir cacheDir;
-	const QString resolution;
 	int curImage;
 	void loadImage(const int image);
 };
